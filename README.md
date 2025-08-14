@@ -1,3 +1,7 @@
+# Link to the webapp
+
+https://stock-market-dashboard-gd3x.onrender.com
+
 # Stock Market Dashboard
 
 A professional stock market dashboard web application built with vanilla JavaScript, Chart.js, and real-time data visualization.
