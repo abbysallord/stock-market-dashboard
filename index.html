@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Stock Market Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header with Market Indices -->
+        <header class="market-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1 class="dashboard-title">Market Dashboard</h1>
+                    <div class="market-status">
+                        <span class="status-indicator live"></span>
+                        <span class="status-text">Market Open</span>
+                        <span class="market-time" id="marketTime">9:30 AM EST</span>
+                    </div>
+                </div>
+                <div class="market-indices">
+                    <div class="index-card" id="spy-card">
+                        <div class="index-name">S&P 500</div>
+                        <div class="index-value">5,543.22</div>
+                        <div class="index-change positive">+23.45 (+0.42%)</div>
+                    </div>
+                    <div class="index-card" id="qqq-card">
+                        <div class="index-name">NASDAQ</div>
+                        <div class="index-value">19,584.30</div>
+                        <div class="index-change negative">-47.12 (-0.24%)</div>
+                    </div>
+                    <div class="index-card" id="dia-card">
+                        <div class="index-name">Dow Jones</div>
+                        <div class="index-value">40,659.76</div>
+                        <div class="index-change positive">+89.23 (+0.22%)</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Content -->
+        <div class="dashboard-main">
+            <!-- Left Sidebar - Company List -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Watchlist</h2>
+                    <div class="search-container">
+                        <input type="text" id="companySearch" placeholder="Search companies..." class="search-input">
+                        <div class="search-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="company-list" id="companyList">
+                    <!-- Company items will be populated by JavaScript -->
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="main-content">
+                <!-- Stock Header Info -->
+                <div class="stock-header">
+                    <div class="stock-title-section">
+                        <h1 class="stock-symbol" id="currentSymbol">AAPL</h1>
+                        <h2 class="stock-name" id="currentName">Apple Inc.</h2>
+                        <div class="stock-sector" id="currentSector">Technology</div>
+                    </div>
+                    <div class="stock-price-section">
+                        <div class="current-price" id="currentPrice">$233.33</div>
+                        <div class="price-change positive" id="priceChange">+$3.68 (+1.60%)</div>
+                        <div class="last-updated">Last updated: <span id="lastUpdated">15:59:45 EST</span></div>
+                    </div>
+                    <div class="stock-actions">
+                        <button class="btn btn--secondary" id="watchlistBtn">
+                            <span class="heart-icon">♡</span> Add to Watchlist
+                        </button>
+                        <button class="btn btn--outline" id="fullscreenBtn">📊 Fullscreen</button>
+                        <button class="btn btn--outline" id="exportBtn">📥 Export</button>
+                    </div>
+                </div>
+
+                <!-- Chart Controls -->
+                <div class="chart-controls">
+                    <div class="time-periods">
+                        <button class="time-btn active" data-period="1D">1D</button>
+                        <button class="time-btn" data-period="1W">1W</button>
+                        <button class="time-btn" data-period="1M">1M</button>
+                        <button class="time-btn" data-period="3M">3M</button>
+                        <button class="time-btn" data-period="1Y">1Y</button>
+                    </div>
+                    <div class="chart-indicators">
+                        <button class="indicator-btn" data-indicator="sma20">SMA 20</button>
+                        <button class="indicator-btn" data-indicator="sma50">SMA 50</button>
+                        <button class="indicator-btn" data-indicator="rsi">RSI</button>
+                        <button class="indicator-btn" data-indicator="macd">MACD</button>
+                    </div>
+                </div>
+
+                <!-- Chart Area -->
+                <div class="chart-section">
+                    <div class="chart-container" style="position: relative; height: 400px;">
+                        <canvas id="stockChart"></canvas>
+                    </div>
+                    <div class="volume-chart-container" style="position: relative; height: 150px;">
+                        <canvas id="volumeChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Stock Details Grid -->
+                <div class="stock-details">
+                    <div class="details-grid">
+                        <div class="detail-card">
+                            <div class="detail-label">Market Cap</div>
+                            <div class="detail-value" id="marketCap">$3.46T</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">P/E Ratio</div>
+                            <div class="detail-value" id="peRatio">32.14</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Dividend Yield</div>
+                            <div class="detail-value" id="dividendYield">0.437%</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">52W High</div>
+                            <div class="detail-value" id="weekHigh">$234.82</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">52W Low</div>
+                            <div class="detail-value" id="weekLow">$164.08</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Avg Volume</div>
+                            <div class="detail-value" id="avgVolume">45.0M</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Risk Level</div>
+                            <div class="detail-value risk-medium" id="riskLevel">Medium</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">AI Prediction</div>
+                            <div class="detail-value prediction-bullish" id="aiPrediction">↗ Bullish</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Analysis Summary -->
+                <div class="technical-summary">
+                    <h3>Technical Analysis</h3>
+                    <div class="technical-grid">
+                        <div class="technical-item">
+                            <span class="technical-label">RSI (14)</span>
+                            <span class="technical-value">65.4</span>
+                            <span class="technical-signal neutral">Neutral</span>
+                        </div>
+                        <div class="technical-item">
+                            <span class="technical-label">MACD</span>
+                            <span class="technical-value">2.15</span>
+                            <span class="technical-signal bullish">Bullish</span>
+                        </div>
+                        <div class="technical-item">
+                            <span class="technical-label">SMA 20</span>
+                            <span class="technical-value">$228.45</span>
+                            <span class="technical-signal bullish">Above</span>
+                        </div>
+                        <div class="technical-item">
+                            <span class="technical-label">SMA 50</span>
+                            <span class="technical-value">$220.12</span>
+                            <span class="technical-signal bullish">Above</span>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Fullscreen Modal -->
+    <div class="modal hidden" id="fullscreenModal">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-content fullscreen-modal">
+            <div class="modal-header">
+                <h2 id="modalStockTitle">AAPL - Apple Inc.</h2>
+                <button class="modal-close" id="modalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="fullscreen-chart-container" style="position: relative; height: 500px;">
+                    <canvas id="fullscreenChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

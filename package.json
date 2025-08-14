@@ -1,0 +1,14 @@
+{
+  "name": "stock-market-dashboard",
+  "version": "1.0.0",
+  "description": "Professional stock market dashboard with real-time data visualization",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "docker:build": "docker build -t stock-dashboard .",
+    "docker:run": "docker run -p 8080:80 stock-dashboard"
+  },
+  "keywords": ["stock", "market", "dashboard", "finance", "trading"],
+  "author": "Your Name",
+  "license": "MIT"
+}
